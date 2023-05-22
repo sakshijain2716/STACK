@@ -1,0 +1,31 @@
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        stack<pair<char,int>>st;
+        string ans="";
+        set<int> ss;   //store indices that need to be removed
+        for(int i=0;i<s.size();i++)
+        {
+            if(st.empty() && s[i]==')')
+            ss.insert(i);
+
+            else if(s[i]=='(')
+            st.push({s[i],i});
+
+            else if(!st.empty() && st.top().first=='(' && s[i]==')')
+                st.pop();
+        }
+        while(!st.empty())
+        {
+            ss.insert(st.top().second);
+            st.pop();
+        }
+
+        for(int i=0;i<s.size();i++)
+        {
+            if(ss.find(i)==ss.end())
+            ans+=s[i];
+        }
+        return ans;
+    }
+};
